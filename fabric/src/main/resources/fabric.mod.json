@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "name": "${name}",
+  "description": "A small mod that adds a biome to the world.",
+  "authors": [ "AvocadoSpud", "DigitalPear" ],
+  "contributors": [ "ebo2022" ],
+
+  "license": "GPLv3",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.ebo2022.newworld.fabric.NewWorldFabric"
+    ]
+  },
+  "depends": {
+    "fabric": "*",
+    "minecraft": "1.18.2",
+    "pollen": ">=1.4.9 <2.0.0"
+  }
+}
