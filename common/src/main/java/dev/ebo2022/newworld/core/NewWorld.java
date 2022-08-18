@@ -2,8 +2,10 @@ package dev.ebo2022.newworld.core;
 
 import dev.ebo2022.newworld.core.other.NewWorldData;
 import dev.ebo2022.newworld.core.registry.NWBlocks;
+import dev.ebo2022.newworld.core.registry.NWBoatTypes;
 import dev.ebo2022.newworld.core.registry.NWItems;
 import gg.moonflower.pollen.api.platform.Platform;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * @author ebo2022
@@ -28,9 +30,14 @@ public class NewWorld {
     public static void commonInit() {
         NWBlocks.load(PLATFORM);
         NWItems.load(PLATFORM);
+        NWBoatTypes.load(PLATFORM);
     }
 
     public static void commonPostInit(Platform.ModSetupContext ctx) {
         ctx.enqueueWork(NewWorldData::init);
+    }
+
+    public static ResourceLocation location(String path) {
+        return new ResourceLocation(MOD_ID, path);
     }
 }
