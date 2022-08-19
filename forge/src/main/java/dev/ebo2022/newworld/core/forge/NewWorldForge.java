@@ -1,4 +1,4 @@
-package dev.ebo2022.newworld.forge;
+package dev.ebo2022.newworld.core.forge;
 
 import dev.ebo2022.newworld.core.NewWorld;
 import net.minecraftforge.fml.common.Mod;

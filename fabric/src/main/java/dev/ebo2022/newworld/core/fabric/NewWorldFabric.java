@@ -1,4 +1,4 @@
-package dev.ebo2022.newworld.fabric;
+package dev.ebo2022.newworld.core.fabric;
 
 import dev.ebo2022.newworld.core.NewWorld;
 import dev.ebo2022.newworld.core.registry.NWFeatures;
