@@ -1,6 +1,7 @@
 package dev.ebo2022.newworld.core.registry;
 
 import com.mojang.datafixers.util.Pair;
+import dev.ebo2022.newworld.common.block.grower.FirTreeGrower;
 import dev.ebo2022.newworld.common.item.TabInsertBlockItem;
 import dev.ebo2022.newworld.core.registry.util.Woodset;
 import gg.moonflower.pollen.api.block.PollinatedStandingSignBlock;
@@ -47,7 +48,7 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_TRAPDOOR = BLOCKS.registerWithItem("fir_trapdoor", FIR::trapdoor, followItem(Items.WARPED_TRAPDOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
     public static final Pair<Supplier<PollinatedStandingSignBlock>, Supplier<PollinatedWallSignBlock>> FIR_SIGN = BLOCKS.registerSign("fir", Material.WOOD, MaterialColor.COLOR_BROWN);
     public static final Supplier<Block> FIR_LEAVES = BLOCKS.registerWithItem("fir_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES)), followItem(Items.SPRUCE_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-    public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new OakTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.SPRUCE_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.SPRUCE_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
