@@ -105,6 +105,11 @@ public class NWFeatures {
         public static final Supplier<PlacedFeature> MOSS_CARPET_WOODED_MEADOW = PLACEMENTS.register("moss_carpet_wooded_meadow", () -> new PlacedFeature(Holder.direct(Configured.MOSS_CARPET_BUSH_WOODED_MEADOW.get()), List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
         public static final Supplier<PlacedFeature> GLOW_LICHEN_WOODED_MEADOW = PLACEMENTS.register("glow_lichen_wooded_meadow", () -> new PlacedFeature(Holder.direct(Configured.GLOW_LICHEN_WOODED_MEADOW.get()), List.of(CountPlacement.of(UniformInt.of(104, 157)), PlacementUtils.FULL_RANGE, RarityFilter.onAverageOnceEvery(2), SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, 30, 300), BiomeFilter.biome())));
 
+        @ExpectPlatform
+        public static Holder<ConfiguredFeature<?, ?>> configuredHolder(Supplier<ConfiguredFeature<?, ?>> feature) {
+            return Platform.error();
+        }
+
         public static void load(Platform platform) {
             LOGGER.debug("Registered to platform");
             PLACEMENTS.register(platform);
