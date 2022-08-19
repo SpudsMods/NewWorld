@@ -1,6 +1,7 @@
 package dev.ebo2022.newworld.core.registry;
 
 import com.google.common.collect.ImmutableList;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.ebo2022.newworld.common.worldgen.feature.FallenLogFeature;
 import dev.ebo2022.newworld.core.NewWorld;
 import gg.moonflower.pollen.api.platform.Platform;
@@ -47,7 +48,7 @@ public class NWFeatures {
         FEATURES.register(platform);
     }
 
-    public static final class Configured {
+    public static class Configured {
 
         private static final Logger LOGGER = LogManager.getLogger();
         public static final PollinatedRegistry<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = PollinatedRegistry.create(BuiltinRegistries.CONFIGURED_FEATURE, NewWorld.MOD_ID);
@@ -62,25 +63,12 @@ public class NWFeatures {
         public static final Supplier<ConfiguredFeature<TreeConfiguration, ?>> GROWN_FIR = CONFIGURED_FEATURES.register("grown_fir", () -> new ConfiguredFeature<>(Feature.TREE, grownFirConfig().build()));
         public static final Supplier<ConfiguredFeature<TreeConfiguration, ?>> GROWN_FIR_BEES_005 = CONFIGURED_FEATURES.register("grown_fir_bees_005", () -> new ConfiguredFeature<>(Feature.TREE, grownFirConfig().decorators(List.of(BEES_05)).build()));
         public static final Supplier<ConfiguredFeature<TreeConfiguration, ?>> GROWN_FIR_BEES_002 = CONFIGURED_FEATURES.register("grown_fir_bees_002", () -> new ConfiguredFeature<>(Feature.TREE, grownFirConfig().decorators(List.of(BEES_02)).build()));
-
         public static final Supplier<ConfiguredFeature<TreeConfiguration, ?>> FIR = CONFIGURED_FEATURES.register("fir", () -> new ConfiguredFeature<>(Feature.TREE, naturalFirConfig().build()));
         public static final Supplier<ConfiguredFeature<TreeConfiguration, ?>> FIR_BEES_005 = CONFIGURED_FEATURES.register("fir_bees_005", () -> new ConfiguredFeature<>(Feature.TREE, naturalFirConfig().decorators(List.of(new AlterGroundDecorator(BlockStateProvider.simple(Blocks.PODZOL)), BEES_05)).build()));
-        public static final Supplier<ConfiguredFeature<RandomPatchConfiguration, ?>> PATCH_BERRY_BUSH_WOODED_MEADOW = CONFIGURED_FEATURES.register("patch_berry_bush_wooded_meadow", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.SWEET_BERRY_BUSH.defaultBlockState().setValue(SweetBerryBushBlock.AGE, 2))), VALID_BERRY_BUSH_BLOCKS, 60)));
-        public static final Supplier<ConfiguredFeature<RandomPatchConfiguration, ?>> MOSS_CARPET_BUSH_WOODED_MEADOW = CONFIGURED_FEATURES.register("moss_carpet_bush_wooded_meadow", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.MOSS_CARPET.defaultBlockState())), VALID_MOSS_CARPET_BLOCKS, 60)));
-        public static final Supplier<ConfiguredFeature<GlowLichenConfiguration, ?>> GLOW_LICHEN_WOODED_MEADOW = CONFIGURED_FEATURES.register("glow_lichen_wooded_meadow", () -> new ConfiguredFeature<>(Feature.GLOW_LICHEN, new GlowLichenConfiguration(20, true, true, true, 0.5f, HolderSet.direct(Block::builtInRegistryHolder, NWBlocks.FIR_LOG.get(), Blocks.MOSSY_COBBLESTONE))));
-
         public static final Supplier<PlacedFeature> FIR_CHECKED = PLACEMENTS.register("fir_checked", () -> new PlacedFeature(Holder.direct(FIR.get()), List.of(PlacementUtils.filteredByBlockSurvival(NWBlocks.FIR_SAPLING.get()))));
         public static final Supplier<PlacedFeature> FIR_BEES_005_CHECKED = PLACEMENTS.register("fir_bees_005_checked", () -> new PlacedFeature(Holder.direct(FIR_BEES_005.get()), List.of(PlacementUtils.filteredByBlockSurvival(NWBlocks.FIR_SAPLING.get()))));
 
-        public static final Supplier<ConfiguredFeature<RandomFeatureConfiguration, ?>> FIR_SPAWN = CONFIGURED_FEATURES.register("fir_spawn", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(Holder.direct(FIR_BEES_005_CHECKED.get()), 0.06f)), Holder.direct(FIR_CHECKED.get()))));
-
-        public static final Supplier<PlacedFeature> TREES_FIR = PLACEMENTS.register("trees_fir", () -> new PlacedFeature(Holder.direct(FIR_SPAWN.get()), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 5))));
-        public static final Supplier<PlacedFeature> GLOW_LICHEN_MEADOW_SPAWN = PLACEMENTS.register("glow_lichen_wooded_meadow", () -> new PlacedFeature(Holder.direct(GLOW_LICHEN_WOODED_MEADOW.get()), List.of(CountPlacement.of(UniformInt.of(104, 157)), PlacementUtils.FULL_RANGE, RarityFilter.onAverageOnceEvery(2), SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, 30, 300), BiomeFilter.biome())));
-        public static final Supplier<PlacedFeature> TREES_FIR_SCARCE = PLACEMENTS.register("trees_fir_scarce", () -> new PlacedFeature(Holder.direct(FIR_SPAWN.get()), VegetationPlacements.treePlacement(RarityFilter.onAverageOnceEvery(2))));
-        public static final Supplier<PlacedFeature> TREES_FIR_MEADOW = PLACEMENTS.register("fir_meadow", () -> new PlacedFeature(Holder.direct(GROWN_FIR_BEES_005.get()), VegetationPlacements.treePlacement(RarityFilter.onAverageOnceEvery(7))));
-        public static final Supplier<PlacedFeature> FALLEN_FIR_LOG_SPAWN = PLACEMENTS.register("fallen_fir_log", () -> new PlacedFeature(Holder.direct(FALLEN_FIR_LOG.get()), List.of(RarityFilter.onAverageOnceEvery(7), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
-        public static final Supplier<PlacedFeature> PATCH_BERRY_MEADOW_SPAWN = PLACEMENTS.register("patch_berry_wooded_meadow", () -> new PlacedFeature(Holder.direct(PATCH_BERRY_BUSH_WOODED_MEADOW.get()), List.of(RarityFilter.onAverageOnceEvery(12), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
-        public static final Supplier<PlacedFeature> MOSS_CARPET_WOODED_MEADOW = PLACEMENTS.register("moss_carpet_wooded_meadow", () -> new PlacedFeature(Holder.direct(MOSS_CARPET_BUSH_WOODED_MEADOW.get()), List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+        public static final Supplier<ConfiguredFeature<RandomFeatureConfiguration, ?>> FIR_SPAWN = CONFIGURED_FEATURES.register("fir_spawn", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placementHolder(FIR_BEES_005_CHECKED), 0.06f)), placementHolder(FIR_CHECKED))));
 
         private static TreeConfiguration.TreeConfigurationBuilder naturalFirConfig() {
             return (new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(NWBlocks.FIR_LOG.get()), new StraightTrunkPlacer(6, 1, 2), BlockStateProvider.simple(NWBlocks.FIR_LEAVES.get()), new SpruceFoliagePlacer(UniformInt.of(1, 3), UniformInt.of(0, 1), UniformInt.of(3, 4)), new TwoLayersFeatureSize(2, 0, 2))).decorators(List.of(new AlterGroundDecorator(BlockStateProvider.simple(Blocks.PODZOL)))).ignoreVines();
@@ -88,6 +76,12 @@ public class NWFeatures {
 
         private static TreeConfiguration.TreeConfigurationBuilder grownFirConfig() {
             return (new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(NWBlocks.FIR_LOG.get()), new StraightTrunkPlacer(6, 1, 2), BlockStateProvider.simple(NWBlocks.FIR_LEAVES.get()), new SpruceFoliagePlacer(UniformInt.of(1, 3), UniformInt.of(0, 1), UniformInt.of(3, 4)), new TwoLayersFeatureSize(2, 0, 2))).ignoreVines();
+        }
+
+        // Keep forge from combusting because the placed feature isn't present
+        @ExpectPlatform
+        public static Holder<PlacedFeature> placementHolder(Supplier<PlacedFeature> feature) {
+            return Platform.error();
         }
 
         public static void load(Platform platform) {

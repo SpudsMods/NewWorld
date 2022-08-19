@@ -47,8 +47,8 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_DOOR = BLOCKS.registerWithItem("fir_door", FIR::door, followItem(Items.WARPED_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
     public static final Supplier<Block> FIR_TRAPDOOR = BLOCKS.registerWithItem("fir_trapdoor", FIR::trapdoor, followItem(Items.WARPED_TRAPDOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
     public static final Pair<Supplier<PollinatedStandingSignBlock>, Supplier<PollinatedWallSignBlock>> FIR_SIGN = BLOCKS.registerSign("fir", Material.WOOD, MaterialColor.COLOR_BROWN);
-    public static final Supplier<Block> FIR_LEAVES = BLOCKS.registerWithItem("fir_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES)), followItem(Items.SPRUCE_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-    public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.SPRUCE_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final Supplier<Block> FIR_LEAVES = BLOCKS.registerWithItem("fir_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES)), followItem(Items.FLOWERING_AZALEA_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.DARK_OAK_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
