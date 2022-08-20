@@ -1,9 +1,6 @@
 package dev.ebo2022.newworld.core;
 
-import dev.ebo2022.newworld.core.registry.NWBlocks;
-import dev.ebo2022.newworld.core.registry.NWBoatTypes;
-import dev.ebo2022.newworld.core.registry.NWFeatures;
-import dev.ebo2022.newworld.core.registry.NWItems;
+import dev.ebo2022.newworld.core.registry.*;
 import gg.moonflower.pollen.api.event.events.entity.ModifyTradesEvents;
 import gg.moonflower.pollen.api.platform.Platform;
 import gg.moonflower.pollen.api.registry.StrippingRegistry;
@@ -40,6 +37,10 @@ public class NewWorld {
         NWBoatTypes.load(PLATFORM);
         NWFeatures.load(PLATFORM);
         NWFeatures.Configured.load(PLATFORM);
+
+        NWBiomes.loadRegistry(PLATFORM);
+        NWBiomes.registerBiomes();
+
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
     }
 

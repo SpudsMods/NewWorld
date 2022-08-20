@@ -71,7 +71,9 @@ public class NWFeatures {
         public static final Supplier<ConfiguredFeature<GlowLichenConfiguration, ?>> GLOW_LICHEN_WOODED_MEADOW = CONFIGURED_FEATURES.register("glow_lichen_wooded_meadow", () -> new ConfiguredFeature<>(Feature.GLOW_LICHEN, new GlowLichenConfiguration(20, true, true, true, 0.5f, HolderSet.direct(Block::builtInRegistryHolder, NWBlocks.FIR_LOG.get(), Blocks.MOSSY_COBBLESTONE))));
         public static final Supplier<PlacedFeature> FIR_CHECKED = PLACEMENTS.register("fir_checked", () -> new PlacedFeature(Holder.direct(FIR.get()), List.of(PlacementUtils.filteredByBlockSurvival(NWBlocks.FIR_SAPLING.get()))));
         public static final Supplier<PlacedFeature> FIR_BEES_005_CHECKED = PLACEMENTS.register("fir_bees_005_checked", () -> new PlacedFeature(Holder.direct(FIR_BEES_005.get()), List.of(PlacementUtils.filteredByBlockSurvival(NWBlocks.FIR_SAPLING.get()))));
-        public static final Supplier<ConfiguredFeature<RandomFeatureConfiguration, ?>> FIR_SPAWN = CONFIGURED_FEATURES.register("fir_spawn", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(placementHolder(FIR_BEES_005_CHECKED), 0.06f)), placementHolder(FIR_CHECKED))));
+        public static final Supplier<ConfiguredFeature<RandomFeatureConfiguration, ?>> FIR_SPAWN = CONFIGURED_FEATURES.register("fir_spawn", () -> new ConfiguredFeature<>(Feature.RANDOM_SELECTOR, new RandomFeatureConfiguration(List.of(new WeightedPlacedFeature(getHolder(FIR_BEES_005_CHECKED), 0.06f)), getHolder(FIR_CHECKED))));
+        public static final Supplier<PlacedFeature> TREES_FIR = PLACEMENTS.register("trees_fir", () -> new PlacedFeature(Holder.direct(FIR_SPAWN.get()), VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 5))));
+
         public static final Supplier<PlacedFeature> TREES_FIR_SCARCE = PLACEMENTS.register("trees_fir_scarce", () -> new PlacedFeature(Holder.direct(FIR_SPAWN.get()), VegetationPlacements.treePlacement(RarityFilter.onAverageOnceEvery(1))));
         public static final ResourceKey<PlacedFeature> TREES_FIR_SCARCE_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, NewWorld.location("trees_fir_scarce"));
         public static final Supplier<PlacedFeature> TREES_FIR_MEADOW = PLACEMENTS.register("trees_fir_meadow", () -> new PlacedFeature(Holder.direct(GROWN_FIR_BEES_005.get()), VegetationPlacements.treePlacement(RarityFilter.onAverageOnceEvery(40))));
@@ -89,9 +91,8 @@ public class NWFeatures {
             return (new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(NWBlocks.FIR_LOG.get()), new StraightTrunkPlacer(6, 1, 2), BlockStateProvider.simple(NWBlocks.FIR_LEAVES.get()), new SpruceFoliagePlacer(UniformInt.of(1, 3), UniformInt.of(0, 1), UniformInt.of(3, 4)), new TwoLayersFeatureSize(2, 0, 2))).ignoreVines();
         }
 
-        // Keep forge from combusting because the placed feature isn't present
         @ExpectPlatform
-        public static Holder<PlacedFeature> placementHolder(Supplier<PlacedFeature> feature) {
+        public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature) {
             return Platform.error();
         }
 

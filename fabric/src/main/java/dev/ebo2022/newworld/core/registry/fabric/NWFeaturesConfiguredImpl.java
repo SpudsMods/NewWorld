@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 public class NWFeaturesConfiguredImpl {
 
-    public static Holder<PlacedFeature> placementHolder(Supplier<PlacedFeature> feature) {
+    public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature) {
         return Holder.direct(feature.get());
     }
 }
