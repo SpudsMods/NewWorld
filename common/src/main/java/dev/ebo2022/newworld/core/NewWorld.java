@@ -37,6 +37,7 @@ public class NewWorld {
         NWBoatTypes.load(PLATFORM);
         NWFeatures.load(PLATFORM);
         NWFeatures.Configured.load(PLATFORM);
+        NWBiomes.load(PLATFORM);
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
     }
 

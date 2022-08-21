@@ -12,6 +12,6 @@ public class NWFeaturesConfiguredImpl {
 
     public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature, String name) {
         final ResourceKey<PlacedFeature> key = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, NewWorld.location(name));
-        return BuiltinRegistries.PLACED_FEATURE.getHolder(key).get();
+        return BuiltinRegistries.PLACED_FEATURE.getOrCreateHolder(key);
     }
 }
