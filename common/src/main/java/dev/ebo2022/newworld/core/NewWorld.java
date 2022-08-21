@@ -1,6 +1,8 @@
 package dev.ebo2022.newworld.core;
 
 import dev.ebo2022.newworld.core.registry.*;
+import gg.moonflower.pollen.api.config.ConfigManager;
+import gg.moonflower.pollen.api.config.PollinatedConfigType;
 import gg.moonflower.pollen.api.event.events.entity.ModifyTradesEvents;
 import gg.moonflower.pollen.api.platform.Platform;
 import gg.moonflower.pollen.api.registry.StrippingRegistry;
@@ -20,15 +22,13 @@ public class NewWorld {
 
     public static final String MOD_ID = "newworld";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    public static final NewWorldConfig.Server SERVER_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.SERVER, NewWorldConfig.Server::new);
     public static final Platform PLATFORM = Platform.builder(MOD_ID)
-            .clientInit(() -> NewWorld::clientInit)
             .clientPostInit(() -> NewWorld::clientPostInit)
             .commonInit(NewWorld::commonInit)
             .commonPostInit(NewWorld::commonPostInit)
             .build();
 
-    public static void clientInit() {
-    }
 
     public static void clientPostInit(Platform.ModSetupContext ctx) {
         RenderTypeRegistry.register(NWBlocks.FIR_SAPLING.get(), RenderType.cutout());
