@@ -6,9 +6,11 @@
   "description": "A small mod that adds a biome to the world.",
   "authors": [ "AvocadoSpud", "DigitalPear" ],
   "contributors": [ "ebo2022" ],
-
   "license": "GPLv3",
   "environment": "*",
+  "mixins": [
+    "${id}-common.mixins.json"
+  ],
   "entrypoints": {
     "main": [
       "dev.ebo2022.newworld.core.fabric.NewWorldFabric"

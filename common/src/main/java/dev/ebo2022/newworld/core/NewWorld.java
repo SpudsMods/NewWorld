@@ -9,6 +9,8 @@ import gg.moonflower.pollen.api.registry.content.CompostablesRegistry;
 import gg.moonflower.pollen.api.registry.content.FlammabilityRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author ebo2022
@@ -17,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 public class NewWorld {
 
     public static final String MOD_ID = "newworld";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static final Platform PLATFORM = Platform.builder(MOD_ID)
             .clientInit(() -> NewWorld::clientInit)
             .clientPostInit(() -> NewWorld::clientPostInit)
@@ -38,11 +41,13 @@ public class NewWorld {
         NWFeatures.load(PLATFORM);
         NWFeatures.Configured.load(PLATFORM);
         NWBiomes.load(PLATFORM);
+        NWStructures.load(PLATFORM);
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
     }
 
     public static void commonPostInit(Platform.ModSetupContext ctx) {
         ctx.enqueueWork(() -> {
+            NWStructures.postLoad();
             CompostablesRegistry.register(NWBlocks.FIR_SAPLING.get(), 0.3F);
             CompostablesRegistry.register(NWBlocks.FIR_LEAVES.get(), 0.3F);
             StrippingRegistry.register(NWBlocks.FIR_LOG.get(), NWBlocks.STRIPPED_FIR_LOG.get());
