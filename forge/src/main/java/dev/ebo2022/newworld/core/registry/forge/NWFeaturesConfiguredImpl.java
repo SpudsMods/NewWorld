@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class NWFeaturesConfiguredImpl {
 
-    public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature) {
+    public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature, String name) {
         return ((RegistryObject<PlacedFeature>) feature).getHolder().get();
     }
 }

@@ -14,7 +14,7 @@
       "dev.ebo2022.newworld.core.fabric.NewWorldFabric"
     ],
     "terrablender": [
-      "dev.ebo2022.newworld.core.fabric.NewWorldTerraBlenderEntry"
+      "dev.ebo2022.newworld.core.fabric.NewWorldFabric"
     ]
   },
   "depends": {
