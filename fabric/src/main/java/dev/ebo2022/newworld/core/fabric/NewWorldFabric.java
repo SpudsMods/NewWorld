@@ -2,6 +2,7 @@ package dev.ebo2022.newworld.core.fabric;
 
 import dev.ebo2022.newworld.core.NewWorld;
 import dev.ebo2022.newworld.core.NewWorldConfig;
+import dev.ebo2022.newworld.core.registry.NWBoatTypes;
 import dev.ebo2022.newworld.core.registry.NWFeatures;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;

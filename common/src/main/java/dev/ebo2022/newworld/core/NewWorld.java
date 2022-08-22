@@ -1,8 +1,10 @@
 package dev.ebo2022.newworld.core;
 
+import dev.ebo2022.newworld.core.other.NWClientEvents;
 import dev.ebo2022.newworld.core.registry.*;
 import gg.moonflower.pollen.api.config.ConfigManager;
 import gg.moonflower.pollen.api.config.PollinatedConfigType;
+import gg.moonflower.pollen.api.event.events.client.render.FogEvents;
 import gg.moonflower.pollen.api.event.events.entity.ModifyTradesEvents;
 import gg.moonflower.pollen.api.platform.Platform;
 import gg.moonflower.pollen.api.registry.StrippingRegistry;
@@ -23,12 +25,17 @@ public class NewWorld {
     public static final String MOD_ID = "newworld";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static final NewWorldConfig.Server SERVER_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.SERVER, NewWorldConfig.Server::new);
+    public static final NewWorldConfig.Client CLIENT_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.CLIENT, NewWorldConfig.Client::new);
     public static final Platform PLATFORM = Platform.builder(MOD_ID)
+            .clientInit(() -> NewWorld::clientInit)
             .clientPostInit(() -> NewWorld::clientPostInit)
             .commonInit(NewWorld::commonInit)
             .commonPostInit(NewWorld::commonPostInit)
             .build();
 
+    public static void clientInit() {
+        FogEvents.FOG_DENSITY.register(NWClientEvents::mistyMeadow);
+    }
 
     public static void clientPostInit(Platform.ModSetupContext ctx) {
         RenderTypeRegistry.register(NWBlocks.FIR_SAPLING.get(), RenderType.cutout());
@@ -36,8 +43,8 @@ public class NewWorld {
 
     public static void commonInit() {
         NWBlocks.load(PLATFORM);
-        NWItems.load(PLATFORM);
         NWBoatTypes.load(PLATFORM);
+        NWItems.load(PLATFORM);
         NWFeatures.load(PLATFORM);
         NWFeatures.Configured.load(PLATFORM);
         NWBiomes.load(PLATFORM);
