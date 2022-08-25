@@ -33,6 +33,6 @@ public class NewWorldFabric implements ModInitializer, TerraBlenderApi {
 
     @Override
     public void onTerraBlenderInitialized() {
-        Regions.register(new NWRegion(NewWorld.location("overworld"), 2));
+        Regions.register(new NWRegion(NewWorld.location("overworld"), 4));
     }
 }
