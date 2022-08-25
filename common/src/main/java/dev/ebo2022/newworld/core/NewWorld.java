@@ -1,5 +1,6 @@
 package dev.ebo2022.newworld.core;
 
+
 import dev.ebo2022.newworld.core.other.NWClientEvents;
 import dev.ebo2022.newworld.core.registry.*;
 import gg.moonflower.pollen.api.config.ConfigManager;
@@ -71,6 +72,7 @@ public class NewWorld {
             FlammabilityRegistry.register(NWBlocks.FIR_LEAVES.get(), 30, 60);
         });
     }
+
 
     public static ResourceLocation location(String path) {
         return new ResourceLocation(MOD_ID, path);

@@ -1,4 +1,9 @@
 {
+
+    "advancements.story.collect_ancient_mattock.title": "Renaissance Tool",
+    "advancements.story.collect_ancient_mattock.description": "Discover an Ancient Mattock.",
+
+
     "block.newworld.fir_planks": "Fir Planks",
     "block.newworld.fir_log": "Fir Log",
     "block.newworld.fir_wood": "Fir Wood",
@@ -20,6 +25,7 @@
 
 
     "item.newworld.fir_boat": "Fir Boat",
+    "item.newworld.ancient_mattock": "Ancient Mattock",
 
 
     "biome.newworld.wooded_meadow": "Wooded Meadow"
