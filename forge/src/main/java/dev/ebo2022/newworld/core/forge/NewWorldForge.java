@@ -20,6 +20,6 @@ public class NewWorldForge {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> Regions.register(new NWRegion(NewWorld.location("overworld"), 2)));
+        event.enqueueWork(() -> Regions.register(new NWRegion(NewWorld.location("overworld"), 4)));
     }
 }
