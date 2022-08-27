@@ -16,12 +16,13 @@ public enum NWTiers implements Tier {
     private final int enchantmentValue;
     private final LazyLoadedValue<Ingredient> repairIngredient;
 
-    NWTiers(int miningLevel, int durability, float attackSpeed, float attackDamage, int enchantibility, Supplier<Ingredient> repairIngredient) {
+
+    NWTiers(int miningLevel, int durability, float miningSpeed, float attackDamage, int enchantmentValue, Supplier<Ingredient> repairIngredient) {
         this.level = miningLevel;
         this.uses = durability;
-        this.speed = attackSpeed;
+        this.speed = miningSpeed;
         this.damage = attackDamage;
-        this.enchantmentValue = enchantibility;
+        this.enchantmentValue = enchantmentValue;
         this.repairIngredient = new LazyLoadedValue(repairIngredient);
     }
 

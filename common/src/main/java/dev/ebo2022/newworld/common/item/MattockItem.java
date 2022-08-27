@@ -7,6 +7,7 @@ import net.minecraft.world.item.Tier;
 public class MattockItem extends DiggerItem {
 
 
+
     public MattockItem(Tier tier, float attackDamage, float attackSpeed, Properties properties) {
         super(attackDamage, attackSpeed, tier, NWBlockTags.MINEABLE_WITH_MATTOCK, properties);
     }
