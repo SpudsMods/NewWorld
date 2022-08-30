@@ -1,10 +1,9 @@
 package dev.ebo2022.newworld.common.item;
 
 import dev.ebo2022.newworld.core.registry.NWBlockTags;
-import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Tier;
 
-public class MattockItem extends DiggerItem {
+public class MattockItem extends NonMagicDiggerItem {
 
 
 

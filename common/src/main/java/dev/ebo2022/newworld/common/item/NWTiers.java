@@ -1,13 +1,14 @@
 package dev.ebo2022.newworld.common.item;
 
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.function.Supplier;
 
 public enum NWTiers implements Tier {
-    ANCIENT(4, 3086, 8.0F, 4.0F, 10, () -> null);
+    ANCIENT(4, 3086, 12.0F, 4.0F, 10, () -> Ingredient.of(Items.IRON_INGOT));
 
     private final int level;
     private final int uses;
