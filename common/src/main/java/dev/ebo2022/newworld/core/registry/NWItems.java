@@ -8,6 +8,7 @@ import gg.moonflower.pollen.api.platform.Platform;
 import gg.moonflower.pollen.api.registry.PollinatedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import org.apache.logging.log4j.LogManager;
@@ -25,7 +26,7 @@ public class NWItems {
     public static final PollinatedRegistry<Item> ITEMS = PollinatedRegistry.create(Registry.ITEM, NewWorld.MOD_ID);
 
     public static final Supplier<Item> FIR_BOAT = ITEMS.register("fir_boat", () -> new PollinatedBoatItem(NWBoatTypes.FIR_BOAT_TYPE, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
-    public static final Supplier<Item> ANCIENT_MATTOCK = ITEMS.register("ancient_mattock", () ->  new MattockItem(NWTiers.ANCIENT, 6.0F, -3.0F, new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).rarity(Rarity.RARE)));
+    public static final Supplier<Item> ANCIENT_MATTOCK = ITEMS.register("ancient_mattock", () -> new MattockItem(NWTiers.ANCIENT, 0.0F, -3.0F, new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).rarity(Rarity.RARE)));
 
     public static void load(Platform platform) {
 

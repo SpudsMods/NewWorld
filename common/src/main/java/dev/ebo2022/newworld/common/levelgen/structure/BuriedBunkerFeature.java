@@ -1,4 +1,4 @@
-package dev.ebo2022.newworld.common.worldgen.structure;
+package dev.ebo2022.newworld.common.levelgen.structure;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

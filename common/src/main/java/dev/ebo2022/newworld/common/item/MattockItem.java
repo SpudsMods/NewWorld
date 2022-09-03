@@ -1,10 +1,16 @@
 package dev.ebo2022.newworld.common.item;
 
+import com.google.common.collect.ImmutableSet;
 import dev.ebo2022.newworld.core.registry.NWBlockTags;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 
-public class MattockItem extends NonMagicDiggerItem {
+import java.util.List;
+import java.util.Set;
 
+public class MattockItem extends DiggerItem {
 
 
     public MattockItem(Tier tier, float attackDamage, float attackSpeed, Properties properties) {

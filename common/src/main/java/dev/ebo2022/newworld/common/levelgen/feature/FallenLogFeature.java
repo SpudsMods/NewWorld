@@ -1,4 +1,4 @@
-package dev.ebo2022.newworld.common.worldgen.feature;
+package dev.ebo2022.newworld.common.levelgen.feature;
 
 import com.mojang.serialization.Codec;
 import dev.ebo2022.newworld.core.registry.NWBlocks;

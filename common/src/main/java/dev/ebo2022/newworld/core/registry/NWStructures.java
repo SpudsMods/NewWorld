@@ -1,6 +1,6 @@
 package dev.ebo2022.newworld.core.registry;
 
-import dev.ebo2022.newworld.common.worldgen.structure.BuriedBunkerFeature;
+import dev.ebo2022.newworld.common.levelgen.structure.BuriedBunkerFeature;
 import dev.ebo2022.newworld.core.NewWorld;
 import dev.ebo2022.newworld.core.mixin.StructureFeatureAccessor;
 import gg.moonflower.pollen.api.platform.Platform;

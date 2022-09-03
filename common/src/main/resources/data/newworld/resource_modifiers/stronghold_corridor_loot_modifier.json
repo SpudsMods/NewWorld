@@ -1,0 +1,15 @@
+{
+  "type": "pollen:loot",
+  "inject": "minecraft:chests/stronghold_corridor",
+  "injectPools": [
+    {
+      "index": 0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "newworld:ancient_mattock"
+        }
+      ]
+    }
+  ]
+}

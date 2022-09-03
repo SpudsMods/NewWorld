@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum NWTiers implements Tier {
-    ANCIENT(4, 3086, 12.0F, 4.0F, 10, () -> Ingredient.of(Items.IRON_INGOT));
+    ANCIENT(4, 3086, 7.0F, 7.0F, 10, () -> Ingredient.of(Items.IRON_INGOT));
 
     private final int level;
     private final int uses;
@@ -24,7 +24,7 @@ public enum NWTiers implements Tier {
         this.speed = miningSpeed;
         this.damage = attackDamage;
         this.enchantmentValue = enchantmentValue;
-        this.repairIngredient = new LazyLoadedValue(repairIngredient);
+        this.repairIngredient = new LazyLoadedValue<>(repairIngredient);
     }
 
     public int getUses() {

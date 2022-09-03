@@ -1,8 +1,7 @@
 package dev.ebo2022.newworld.core.registry;
 
-import com.google.common.collect.ImmutableList;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import dev.ebo2022.newworld.common.worldgen.feature.FallenLogFeature;
+import dev.ebo2022.newworld.common.levelgen.feature.FallenLogFeature;
 import dev.ebo2022.newworld.core.NewWorld;
 import gg.moonflower.pollen.api.platform.Platform;
 import gg.moonflower.pollen.api.registry.PollinatedRegistry;
@@ -14,7 +13,6 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
