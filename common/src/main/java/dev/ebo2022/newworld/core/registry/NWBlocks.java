@@ -3,6 +3,7 @@ package dev.ebo2022.newworld.core.registry;
 import com.mojang.datafixers.util.Pair;
 import dev.ebo2022.newworld.common.block.grower.FirTreeGrower;
 import dev.ebo2022.newworld.common.item.TabInsertBlockItem;
+import dev.ebo2022.newworld.core.NewWorld;
 import dev.ebo2022.newworld.core.registry.util.Woodset;
 import gg.moonflower.pollen.api.block.PollinatedStandingSignBlock;
 import gg.moonflower.pollen.api.block.PollinatedWallSignBlock;
@@ -52,27 +53,9 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.DARK_OAK_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
-    public static final Supplier<Block> FIR_BOOKSHELF = BLOCKS.registerWithItem("fir_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5f).sound(SoundType.WOOD).color(MaterialColor.COLOR_BROWN)),
-            new Item.Properties().tab(getDependencies(List.of("charm", "everycomp", "quark"))));
+    public static final Supplier<Block> FIR_BOOKSHELF = BLOCKS.registerWithItem("fir_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5f).sound(SoundType.WOOD).color(MaterialColor.COLOR_BROWN)), new Item.Properties().tab(NewWorld.makeCompatObject(CreativeModeTab.TAB_BUILDING_BLOCKS, "charm", "everycomp", "quark")));
 
 
-    public static CreativeModeTab getDependencies(List<String> list){
-        if (list.isEmpty()){
-            return null;
-        }
-        for (String id : list) {
-            if (Platform.isModLoaded(id)) {
-                return CreativeModeTab.TAB_BUILDING_BLOCKS;
-            }
-        }
-        return null;
-    }
-    public static CreativeModeTab getDependencies(String mod){
-        if (Platform.isModLoaded(mod)) {
-            return CreativeModeTab.TAB_BUILDING_BLOCKS;
-        }
-        return null;
-    }
 
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
         return () -> new FlowerPotBlock(block.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM));

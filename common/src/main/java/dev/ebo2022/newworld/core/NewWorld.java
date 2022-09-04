@@ -77,4 +77,18 @@ public class NewWorld {
     public static ResourceLocation location(String path) {
         return new ResourceLocation(MOD_ID, path);
     }
+
+    public static <T> T makeCompatObject(T object, T orElse, String... modIds) {
+        if (modIds == null) return object;
+        for (String id: modIds) {
+            if (Platform.isModLoaded(id)) {
+                return object;
+            }
+        }
+        return orElse;
+    }
+
+    public static <T> T makeCompatObject(T object, String... modIds) {
+        return makeCompatObject(object, null, modIds);
+    }
 }
