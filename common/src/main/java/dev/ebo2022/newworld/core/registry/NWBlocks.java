@@ -20,6 +20,7 @@ import net.minecraft.world.level.material.MaterialColor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -51,7 +52,27 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.DARK_OAK_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
-    public static final Supplier<Block> FIR_BOOKSHELF = BLOCKS.registerWithItem("fir_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5f).sound(SoundType.WOOD).color(MaterialColor.COLOR_BROWN)), new Item.Properties().tab(Platform.isModLoaded("charm") ? CreativeModeTab.TAB_DECORATIONS : null));
+    public static final Supplier<Block> FIR_BOOKSHELF = BLOCKS.registerWithItem("fir_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5f).sound(SoundType.WOOD).color(MaterialColor.COLOR_BROWN)),
+            new Item.Properties().tab(getDependencies(List.of("charm", "everycomp", "quark"))));
+
+
+    public static CreativeModeTab getDependencies(List<String> list){
+        if (list.isEmpty()){
+            return null;
+        }
+        for (String id : list) {
+            if (Platform.isModLoaded(id)) {
+                return CreativeModeTab.TAB_BUILDING_BLOCKS;
+            }
+        }
+        return null;
+    }
+    public static CreativeModeTab getDependencies(String mod){
+        if (Platform.isModLoaded(mod)) {
+            return CreativeModeTab.TAB_BUILDING_BLOCKS;
+        }
+        return null;
+    }
 
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
         return () -> new FlowerPotBlock(block.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM));

@@ -45,8 +45,8 @@ public class FallenLogFeature extends Feature<BlockStateConfiguration> {
     }
 
     public static void generateLog(WorldGenLevel world, BlockPos pos, BlockState state, Direction direction){
-        for (int j = 10; j >= 0; --j) {
-            if (!isAir(world, pos.below()) && !world.getBlockState(pos).is(NWBlocks.FIR_LOG.get())){
+        for (int j = 0; j >= -10; --j) {
+            if (!isAir(world, pos.below(j)) && !world.getBlockState(pos).is(NWBlocks.FIR_LOG.get())){
                 world.setBlock(pos, state.setValue(RotatedPillarBlock.AXIS, direction.getAxis()), Block.UPDATE_INVISIBLE);
             } else {
                 break;
