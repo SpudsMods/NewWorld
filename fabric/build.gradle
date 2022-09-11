@@ -56,7 +56,7 @@ dependencies {
     modApi("gg.moonflower:pollen-fabric:${rootProject.pollen_version}")
     modApi "com.terraformersmc:modmenu:${rootProject.mod_menu_version}"
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:${rootProject.minecraft_version}-${rootProject.terrablender_version}")
-    modImplementation("curse.maven:carpenter-549446:${rootProject.carpenter_fabric_version}")
+    modApi("curse.maven:carpenter-549446:${rootProject.carpenter_fabric_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

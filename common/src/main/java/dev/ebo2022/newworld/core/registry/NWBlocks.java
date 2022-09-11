@@ -4,7 +4,13 @@ import com.mojang.datafixers.util.Pair;
 import dev.ebo2022.newworld.common.block.grower.FirTreeGrower;
 import dev.ebo2022.newworld.common.item.TabInsertBlockItem;
 import dev.ebo2022.newworld.core.NewWorld;
+import dev.ebo2022.newworld.core.hook.CarpenterCompatHooks;
 import dev.ebo2022.newworld.core.registry.util.Woodset;
+import gg.moonflower.carpenter.common.block.CarpenterBookshelfBlock;
+import gg.moonflower.carpenter.common.block.CarpenterChestBlock;
+import gg.moonflower.carpenter.common.block.CarpenterTrappedChestBlock;
+import gg.moonflower.carpenter.core.registry.CarpenterBlocks;
+import gg.moonflower.carpenter.core.registry.CarpenterChestType;
 import gg.moonflower.pollen.api.block.PollinatedStandingSignBlock;
 import gg.moonflower.pollen.api.block.PollinatedWallSignBlock;
 import gg.moonflower.pollen.api.platform.Platform;
@@ -14,14 +20,12 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.grower.OakTreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -53,16 +57,32 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.DARK_OAK_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
-    public static final Supplier<Block> FIR_BOOKSHELF = BLOCKS.registerWithItem("fir_bookshelf", () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(1.5f).sound(SoundType.WOOD).color(MaterialColor.COLOR_BROWN)), new Item.Properties().tab(NewWorld.makeCompatObject(CreativeModeTab.TAB_BUILDING_BLOCKS, "charm", "everycomp", "quark")));
+    public static Supplier<Block> FIR_BOOKSHELF = registerBookshelf("fir");
+    public static Supplier<Block> FIR_CHEST = registerChest("fir_chest");
+    public static Supplier<Block> TRAPPED_FIR_CHEST = registerTrappedChest("fir_chest");
 
+    private static Supplier<Block> registerChest(String chestType) {
+        // register chest type alongside the block
+        Supplier<CarpenterChestType> chestTypeSupplier = CarpenterCompatHooks.buildChestType(chestType);
+        return BLOCKS.registerWithItem(chestType, () -> new CarpenterChestBlock(chestTypeSupplier, BlockBehaviour.Properties.copy(Blocks.CHEST), CarpenterBlocks.CARPENTER_CHEST_BE::get), (block) -> new TabInsertBlockItem(block, Items.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
+    }
 
+    private static Supplier<Block> registerTrappedChest(String chestType) {
+        // register chest type alongside the block
+        Supplier<CarpenterChestType> chestTypeSupplier = () -> CarpenterCompatHooks.CHEST_TYPES.get(NewWorld.location(chestType));
+        return BLOCKS.registerWithItem("trapped_" + chestType, () -> new CarpenterTrappedChestBlock(chestTypeSupplier, BlockBehaviour.Properties.copy(Blocks.TRAPPED_CHEST), CarpenterBlocks.CARPENTER_TRAPPED_CHEST_BE::get), (block) -> new TabInsertBlockItem(block, Items.TRAPPED_CHEST, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+    }
 
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
         return () -> new FlowerPotBlock(block.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM));
     }
 
     private static Function<Block, Item> followItem(Item insertAfter, Item.Properties properties) {
-        return object -> new TabInsertBlockItem(insertAfter, object, properties);
+        return object -> new TabInsertBlockItem(object, insertAfter, properties);
+    }
+
+    private static Supplier<Block> registerBookshelf(String wood) {
+        return BLOCKS.registerWithItem(wood + "_bookshelf", () -> new CarpenterBookshelfBlock(BlockBehaviour.Properties.copy(Blocks.BOOKSHELF)), (block) -> new TabInsertBlockItem(block, Items.BOOKSHELF, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
     }
 
     public static void load(Platform platform) {

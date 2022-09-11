@@ -10,27 +10,25 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.function.Predicate;
 
-/**
- * @author Jackson (code temporarily from next/1.16.x branch of Pollen)
- */
-// TODO Replace this with Pollen's implementation once it releases
+// TODO: move this to pollen
 public class TabInsertBlockItem extends BlockItem {
+
     private final Predicate<ItemStack> filter;
     private final boolean insertBefore;
 
-    public TabInsertBlockItem(Item insertAfter, Block block, Properties properties) {
-        this(stack -> stack.getItem() == insertAfter, false, block, properties);
+    public TabInsertBlockItem(Block block, Item insertAfter, Properties properties) {
+        this(block, stack -> stack.getItem() == insertAfter, false, properties);
     }
 
-    public TabInsertBlockItem(Class<Item> insertAfterClass, Block block, Properties properties) {
-        this(stack -> insertAfterClass.isInstance(stack.getItem()), false, block, properties);
+    public TabInsertBlockItem(Block block, Class<Item> insertAfterClass, Properties properties) {
+        this(block, stack -> insertAfterClass.isInstance(stack.getItem()), false, properties);
     }
 
-    public TabInsertBlockItem(Predicate<ItemStack> filter, Block block, Properties properties) {
-        this(filter, false, block, properties);
+    public TabInsertBlockItem(Block block, Predicate<ItemStack> filter, Properties properties) {
+        this(block, filter, false, properties);
     }
 
-    public TabInsertBlockItem(Predicate<ItemStack> filter, boolean insertBefore, Block block, Properties properties) {
+    public TabInsertBlockItem(Block block, Predicate<ItemStack> filter, boolean insertBefore, Properties properties) {
         super(block, properties);
         this.filter = filter;
         this.insertBefore = insertBefore;
