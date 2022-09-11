@@ -35,7 +35,7 @@ public class NWCarpenterCompat {
     )));
 
     public static final Supplier<Block> FIR_BOOKSHELF = create(() -> NWBlocks.BLOCKS.registerWithItem("fir_bookshelf", () -> new CarpenterBookshelfBlock(BlockBehaviour.Properties.copy(Blocks.BOOKSHELF)), (block) -> new TabInsertBlockItem(block, Items.BOOKSHELF, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS))));
-    public static final Supplier<Block> FIR_CHEST = create(() -> NWBlocks.BLOCKS.registerWithItem("fir_chest", () -> new CarpenterChestBlock(FIR_CHEST_TYPE, BlockBehaviour.Properties.copy(Blocks.CHEST), () -> CarpenterBlocks.CARPENTER_TRAPPED_CHEST_BE.get()), (block) -> new TabInsertBlockItem(block, Items.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS))));
+    public static final Supplier<Block> FIR_CHEST = create(() -> NWBlocks.BLOCKS.registerWithItem("fir_chest", () -> new CarpenterChestBlock(FIR_CHEST_TYPE, BlockBehaviour.Properties.copy(Blocks.CHEST), () -> CarpenterBlocks.CARPENTER_CHEST_BE.get()), (block) -> new TabInsertBlockItem(block, Items.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS))));
     public static final Supplier<Block> FIR_TRAPPED_CHEST = create(() -> NWBlocks.BLOCKS.registerWithItem("trapped_fir_chest", () -> new CarpenterTrappedChestBlock(FIR_CHEST_TYPE, BlockBehaviour.Properties.copy(Blocks.TRAPPED_CHEST), () -> CarpenterBlocks.CARPENTER_TRAPPED_CHEST_BE.get()), (block) -> new TabInsertBlockItem(block, Items.TRAPPED_CHEST, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE))));
 
     private static <T> T create(Supplier<T> factory) {
