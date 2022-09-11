@@ -58,11 +58,6 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.DARK_OAK_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
-    private static Supplier<Block> registerTrappedChest(String id, Supplier<CarpenterChestType> chestType) {
-        // register chest type alongside the block
-        return BLOCKS.registerWithItem(id, () -> new CarpenterChestBlock(chestType, BlockBehaviour.Properties.copy(Blocks.CHEST), CarpenterBlocks.CARPENTER_CHEST_BE::get), (block) -> new TabInsertBlockItem(block, Items.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-    }
-
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
         return () -> new FlowerPotBlock(block.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM));
     }
