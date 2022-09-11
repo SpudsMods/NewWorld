@@ -24,7 +24,7 @@ public class NWCarpenterCompat {
 
     public static final PollinatedRegistry<CarpenterChestType> CHEST_TYPES = create(() -> PollinatedRegistry.create(CarpenterChests.REGISTRY, NewWorld.MOD_ID));
 
-    public static final Supplier<CarpenterChestType> FIR_CHEST_TYPE = create(() -> Objects.requireNonNull(CHEST_TYPES).register("fir_chest_type", () -> new CarpenterChestType(
+    public static final Supplier<CarpenterChestType> FIR_CHEST_TYPE = create(() -> Objects.requireNonNull(CHEST_TYPES).register("fir_chest", () -> new CarpenterChestType(
             NewWorld.location("block/fir_chest/fir_chest_base"),
             NewWorld.location("block/fir_chest/fir_chest_base_left"),
             NewWorld.location("block/fir_chest/fir_chest_base_right"),
