@@ -1,15 +1,8 @@
 package dev.ebo2022.newworld.core;
 
 
-import dev.ebo2022.newworld.core.datagen.NewWorldBlockLootGenerator;
-import dev.ebo2022.newworld.core.datagen.NewWorldBlockModelProvider;
-import dev.ebo2022.newworld.core.datagen.NewWorldBlockTagsProvider;
-import dev.ebo2022.newworld.core.datagen.NewWorldRecipeProvider;
-import dev.ebo2022.newworld.core.hook.CarpenterCompatHooks;
 import dev.ebo2022.newworld.core.other.NWClientEvents;
 import dev.ebo2022.newworld.core.registry.*;
-import gg.moonflower.carpenter.core.Carpenter;
-import gg.moonflower.carpenter.core.datagen.CarpenterBlockModelProvider;
 import gg.moonflower.pollen.api.config.ConfigManager;
 import gg.moonflower.pollen.api.config.PollinatedConfigType;
 import gg.moonflower.pollen.api.datagen.provider.loot_table.PollinatedLootTableProvider;
@@ -18,7 +11,6 @@ import gg.moonflower.pollen.api.event.events.client.render.FogEvents;
 import gg.moonflower.pollen.api.event.events.entity.ModifyTradesEvents;
 import gg.moonflower.pollen.api.platform.Platform;
 import gg.moonflower.pollen.api.registry.StrippingRegistry;
-import gg.moonflower.pollen.api.registry.client.ModelRegistry;
 import gg.moonflower.pollen.api.registry.client.RenderTypeRegistry;
 import gg.moonflower.pollen.api.registry.content.CompostablesRegistry;
 import gg.moonflower.pollen.api.registry.content.FlammabilityRegistry;
@@ -45,7 +37,6 @@ public class NewWorld {
             .clientPostInit(() -> NewWorld::clientPostInit)
             .commonInit(NewWorld::commonInit)
             .commonPostInit(NewWorld::commonPostInit)
-            .dataInit(NewWorld::dataInit)
             .build();
 
     public static void clientInit() {
@@ -64,8 +55,11 @@ public class NewWorld {
         NWFeatures.Configured.load(PLATFORM);
         NWBiomes.load(PLATFORM);
         NWStructures.load(PLATFORM);
-        CarpenterCompatHooks.load(PLATFORM);
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
+
+        // Safely load carpenter content if the mod is present
+        if (NWCarpenterCompat.canLoad())
+            NWCarpenterCompat.onCommon();
     }
 
     public static void commonPostInit(Platform.ModSetupContext ctx) {
@@ -86,24 +80,6 @@ public class NewWorld {
             FlammabilityRegistry.register(NWBlocks.FIR_WOOD.get(), 5, 5);
             FlammabilityRegistry.register(NWBlocks.FIR_LEAVES.get(), 30, 60);
         });
-    }
-
-    // TODO: Fully convert to fabric datagen
-    public static void dataInit(Platform.DataSetupContext ctx) {
-        DataGenerator generator = ctx.getGenerator();
-        PollinatedModContainer container = ctx.getMod();
-
-        PollinatedModelProvider modelProvider = new PollinatedModelProvider(generator, container);
-        modelProvider.addGenerator(NewWorldBlockModelProvider::new);
-        generator.addProvider(modelProvider);
-
-        PollinatedLootTableProvider lootProvider = new PollinatedLootTableProvider(generator);
-        lootProvider.add(LootContextParamSets.BLOCK, new NewWorldBlockLootGenerator(container));
-        generator.addProvider(lootProvider);
-
-        NewWorldBlockTagsProvider blockTagsProvider = new NewWorldBlockTagsProvider(generator, container);
-        generator.addProvider(blockTagsProvider);
-        generator.addProvider(new NewWorldRecipeProvider(generator));
     }
 
     public static ResourceLocation location(String path) {

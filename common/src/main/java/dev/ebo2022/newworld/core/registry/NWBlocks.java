@@ -4,13 +4,13 @@ import com.mojang.datafixers.util.Pair;
 import dev.ebo2022.newworld.common.block.grower.FirTreeGrower;
 import dev.ebo2022.newworld.common.item.TabInsertBlockItem;
 import dev.ebo2022.newworld.core.NewWorld;
-import dev.ebo2022.newworld.core.hook.CarpenterCompatHooks;
 import dev.ebo2022.newworld.core.registry.util.Woodset;
 import gg.moonflower.carpenter.common.block.CarpenterBookshelfBlock;
 import gg.moonflower.carpenter.common.block.CarpenterChestBlock;
 import gg.moonflower.carpenter.common.block.CarpenterTrappedChestBlock;
 import gg.moonflower.carpenter.core.registry.CarpenterBlocks;
 import gg.moonflower.carpenter.core.registry.CarpenterChestType;
+import gg.moonflower.carpenter.core.registry.CarpenterChests;
 import gg.moonflower.pollen.api.block.PollinatedStandingSignBlock;
 import gg.moonflower.pollen.api.block.PollinatedWallSignBlock;
 import gg.moonflower.pollen.api.platform.Platform;
@@ -37,6 +37,7 @@ public class NWBlocks {
 
     private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedBlockRegistry BLOCKS = PollinatedRegistry.createBlock(NWItems.ITEMS);
+    public static final PollinatedRegistry<CarpenterChestType> CHEST_TYPES = PollinatedRegistry.create(CarpenterChests.REGISTRY, NewWorld.MOD_ID);
     private static final Woodset FIR = new Woodset(MaterialColor.DEEPSLATE, MaterialColor.COLOR_BROWN);
 
     public static final Supplier<Block> STRIPPED_FIR_LOG = BLOCKS.registerWithItem("stripped_fir_log", FIR::stripped_log, followItem(Items.STRIPPED_WARPED_STEM, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
@@ -52,25 +53,14 @@ public class NWBlocks {
     public static final Supplier<Block> FIR_FENCE_GATE = BLOCKS.registerWithItem("fir_fence_gate", FIR::fenceGate, followItem(Items.WARPED_FENCE_GATE, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
     public static final Supplier<Block> FIR_DOOR = BLOCKS.registerWithItem("fir_door", FIR::door, followItem(Items.WARPED_DOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
     public static final Supplier<Block> FIR_TRAPDOOR = BLOCKS.registerWithItem("fir_trapdoor", FIR::trapdoor, followItem(Items.WARPED_TRAPDOOR, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-    public static final Pair<Supplier<PollinatedStandingSignBlock>, Supplier<PollinatedWallSignBlock>> FIR_SIGN = BLOCKS.registerSign("fir", Material.WOOD, MaterialColor.COLOR_BROWN);
+    public static final Pair<Supplier<PollinatedStandingSignBlock>, Supplier<PollinatedWallSignBlock>> FIR_SIGN = BLOCKS.registerSign("fir", Material.WOOD, FIR.woodColor());
     public static final Supplier<Block> FIR_LEAVES = BLOCKS.registerWithItem("fir_leaves", () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_LEAVES)), followItem(Items.FLOWERING_AZALEA_LEAVES, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> FIR_SAPLING = BLOCKS.registerWithItem("fir_sapling", () -> new SaplingBlock(new FirTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)), followItem(Items.DARK_OAK_SAPLING, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     public static final Supplier<Block> POTTED_FIR_SAPLING = BLOCKS.register("potted_fir_sapling", createFlowerPot(FIR_SAPLING));
 
-    public static Supplier<Block> FIR_BOOKSHELF = registerBookshelf("fir");
-    public static Supplier<Block> FIR_CHEST = registerChest("fir_chest");
-    public static Supplier<Block> TRAPPED_FIR_CHEST = registerTrappedChest("fir_chest");
-
-    private static Supplier<Block> registerChest(String chestType) {
+    private static Supplier<Block> registerTrappedChest(String id, Supplier<CarpenterChestType> chestType) {
         // register chest type alongside the block
-        Supplier<CarpenterChestType> chestTypeSupplier = CarpenterCompatHooks.buildChestType(chestType);
-        return BLOCKS.registerWithItem(chestType, () -> new CarpenterChestBlock(chestTypeSupplier, BlockBehaviour.Properties.copy(Blocks.CHEST), CarpenterBlocks.CARPENTER_CHEST_BE::get), (block) -> new TabInsertBlockItem(block, Items.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
-    }
-
-    private static Supplier<Block> registerTrappedChest(String chestType) {
-        // register chest type alongside the block
-        Supplier<CarpenterChestType> chestTypeSupplier = () -> CarpenterCompatHooks.CHEST_TYPES.get(NewWorld.location(chestType));
-        return BLOCKS.registerWithItem("trapped_" + chestType, () -> new CarpenterTrappedChestBlock(chestTypeSupplier, BlockBehaviour.Properties.copy(Blocks.TRAPPED_CHEST), CarpenterBlocks.CARPENTER_TRAPPED_CHEST_BE::get), (block) -> new TabInsertBlockItem(block, Items.TRAPPED_CHEST, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+        return BLOCKS.registerWithItem(id, () -> new CarpenterChestBlock(chestType, BlockBehaviour.Properties.copy(Blocks.CHEST), CarpenterBlocks.CARPENTER_CHEST_BE::get), (block) -> new TabInsertBlockItem(block, Items.CHEST, new Item.Properties().tab(CreativeModeTab.TAB_DECORATIONS)));
     }
 
     private static Supplier<Block> createFlowerPot(Supplier<Block> block) {
@@ -81,12 +71,9 @@ public class NWBlocks {
         return object -> new TabInsertBlockItem(object, insertAfter, properties);
     }
 
-    private static Supplier<Block> registerBookshelf(String wood) {
-        return BLOCKS.registerWithItem(wood + "_bookshelf", () -> new CarpenterBookshelfBlock(BlockBehaviour.Properties.copy(Blocks.BOOKSHELF)), (block) -> new TabInsertBlockItem(block, Items.BOOKSHELF, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-    }
-
     public static void load(Platform platform) {
         LOGGER.debug("Registered to platform");
         BLOCKS.register(platform);
+        CHEST_TYPES.register(platform);
     }
 }
