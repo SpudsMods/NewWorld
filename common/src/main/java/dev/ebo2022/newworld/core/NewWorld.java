@@ -88,6 +88,7 @@ public class NewWorld {
         });
     }
 
+    // TODO: Fully convert to fabric datagen
     public static void dataInit(Platform.DataSetupContext ctx) {
         DataGenerator generator = ctx.getGenerator();
         PollinatedModContainer container = ctx.getMod();
