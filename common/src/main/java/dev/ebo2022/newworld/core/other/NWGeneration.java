@@ -51,7 +51,6 @@ public class NWGeneration {
         BiomeDefaultFeatures.commonSpawns(spawnBuilder);
         BiomeGenerationSettings.Builder biomeBuilder = new BiomeGenerationSettings.Builder();
         globalOverworldGeneration(biomeBuilder);
-        addWoodedMeadowFeatures(biomeBuilder);
         BiomeDefaultFeatures.addForestFlowers(biomeBuilder);
         BiomeDefaultFeatures.addWarmFlowers(biomeBuilder);
         biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, MiscOverworldPlacements.FOREST_ROCK);
@@ -63,6 +62,9 @@ public class NWGeneration {
         BiomeDefaultFeatures.addMeadowVegetation(biomeBuilder);
         BiomeDefaultFeatures.addExtraEmeralds(biomeBuilder);
         BiomeDefaultFeatures.addInfestedStone(biomeBuilder);
+
+        addWoodedMeadowFeatures(biomeBuilder);
+
 
         Music music = Musics.createGameMusic(SoundEvents.MUSIC_BIOME_MEADOW);
         return biome(Biome.Precipitation.RAIN, Biome.BiomeCategory.FOREST, 0.5F, 0.8F, 937679, spawnBuilder, biomeBuilder, music);

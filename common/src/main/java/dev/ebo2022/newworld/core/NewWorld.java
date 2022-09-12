@@ -58,8 +58,11 @@ public class NewWorld {
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
 
         // Safely load carpenter content if the mod is present
-        if (NWCarpenterCompat.canLoad())
-            NWCarpenterCompat.onCommon();
+        try {
+            Class.forName("gg.moonflower.carpenter.core.Carpenter", false, NewWorld.class.getClassLoader());
+            NWCarpenterCompat.init();
+        } catch (ClassNotFoundException ignored) {
+        }
     }
 
     public static void commonPostInit(Platform.ModSetupContext ctx) {
@@ -98,5 +101,14 @@ public class NewWorld {
 
     public static <T> T makeCompatObject(T object, String... modIds) {
         return makeCompatObject(object, null, modIds);
+    }
+
+    public static boolean canCarpenterLoad() {
+        try {
+            Class.forName("gg.moonflower.carpenter.core.Carpenter", false, NewWorld.class.getClassLoader());
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 }

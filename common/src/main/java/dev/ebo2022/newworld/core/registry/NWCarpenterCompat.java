@@ -39,14 +39,19 @@ public class NWCarpenterCompat {
     public static final Supplier<Block> FIR_TRAPPED_CHEST = create(() -> NWBlocks.BLOCKS.registerWithItem("trapped_fir_chest", () -> new CarpenterTrappedChestBlock(FIR_CHEST_TYPE, BlockBehaviour.Properties.copy(Blocks.TRAPPED_CHEST), () -> CarpenterBlocks.CARPENTER_TRAPPED_CHEST_BE.get()), (block) -> new TabInsertBlockItem(block, Items.TRAPPED_CHEST, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE))));
 
     private static <T> T create(Supplier<T> factory) {
-        return !canLoad() ? null : factory.get();
+        return !isAbleToLoad() ? null : factory.get();
     }
 
-    public static boolean canLoad() {
-        return Platform.isModLoaded("carpenter");
+    private static boolean isAbleToLoad() {
+        try {
+            Class.forName("gg.moonflower.carpenter.core.registry.CarpenterChests", false, NewWorld.class.getClassLoader());
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
     }
 
-    public static void onCommon() {
+    public static void init() {
         Objects.requireNonNull(CHEST_TYPES).register(NewWorld.PLATFORM);
     }
 }

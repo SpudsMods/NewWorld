@@ -37,7 +37,6 @@ public class NWBlocks {
 
     private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedBlockRegistry BLOCKS = PollinatedRegistry.createBlock(NWItems.ITEMS);
-    public static final PollinatedRegistry<CarpenterChestType> CHEST_TYPES = PollinatedRegistry.create(CarpenterChests.REGISTRY, NewWorld.MOD_ID);
     private static final Woodset FIR = new Woodset(MaterialColor.DEEPSLATE, MaterialColor.COLOR_BROWN);
 
     public static final Supplier<Block> STRIPPED_FIR_LOG = BLOCKS.registerWithItem("stripped_fir_log", FIR::stripped_log, followItem(Items.STRIPPED_WARPED_STEM, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
@@ -69,6 +68,5 @@ public class NWBlocks {
     public static void load(Platform platform) {
         LOGGER.debug("Registered to platform");
         BLOCKS.register(platform);
-        CHEST_TYPES.register(platform);
     }
 }
