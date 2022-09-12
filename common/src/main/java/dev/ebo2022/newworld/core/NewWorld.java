@@ -29,7 +29,6 @@ import org.apache.logging.log4j.Logger;
 public class NewWorld {
 
     public static final String MOD_ID = "newworld";
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static final NewWorldConfig.Server SERVER_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.SERVER, NewWorldConfig.Server::new);
     public static final NewWorldConfig.Client CLIENT_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.CLIENT, NewWorldConfig.Client::new);
     public static final Platform PLATFORM = Platform.builder(MOD_ID)
@@ -48,21 +47,24 @@ public class NewWorld {
     }
 
     public static void commonInit() {
-        NWBlocks.load(PLATFORM);
-        NWBoatTypes.load(PLATFORM);
-        NWItems.load(PLATFORM);
-        NWFeatures.load(PLATFORM);
-        NWFeatures.Configured.load(PLATFORM);
-        NWBiomes.load(PLATFORM);
-        NWStructures.load(PLATFORM);
+        try {
+            Class.forName("gg.moonflower.carpenter.core.Carpenter", false, NewWorld.class.getClassLoader());
+            NWCarpenterCompat.CHEST_TYPES.register(PLATFORM);
+        } catch (ClassNotFoundException ignored) {
+        }
+
+        NWBlocks.BLOCKS.register(PLATFORM);
+        NWBoatTypes.BOAT_TYPES.register(PLATFORM);
+        NWItems.ITEMS.register(PLATFORM);
+        NWFeatures.FEATURES.register(PLATFORM);
+        NWFeatures.Configured.CONFIGURED_FEATURES.register(PLATFORM);
+        NWFeatures.Configured.PLACEMENTS.register(PLATFORM);
+        NWBiomes.BIOMES.register(PLATFORM);
+        NWStructures.STRUCTURES.register(PLATFORM);
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
 
         // Safely load carpenter content if the mod is present
-        try {
-            Class.forName("gg.moonflower.carpenter.core.Carpenter", false, NewWorld.class.getClassLoader());
-            NWCarpenterCompat.init();
-        } catch (ClassNotFoundException ignored) {
-        }
+
     }
 
     public static void commonPostInit(Platform.ModSetupContext ctx) {

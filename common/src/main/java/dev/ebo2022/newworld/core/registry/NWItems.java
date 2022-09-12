@@ -22,15 +22,9 @@ import java.util.function.Supplier;
  */
 @SuppressWarnings("unused")
 public class NWItems {
-    private static final Logger LOGGER = LogManager.getLogger();
+
     public static final PollinatedRegistry<Item> ITEMS = PollinatedRegistry.create(Registry.ITEM, NewWorld.MOD_ID);
 
     public static final Supplier<Item> FIR_BOAT = ITEMS.register("fir_boat", () -> new PollinatedBoatItem(NWBoatTypes.FIR_BOAT_TYPE, new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TRANSPORTATION)));
     public static final Supplier<Item> ANCIENT_MATTOCK = ITEMS.register("ancient_mattock", () -> new MattockItem(NWTiers.ANCIENT, 0.0F, -3.0F, new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).rarity(Rarity.RARE)));
-
-    public static void load(Platform platform) {
-
-        LOGGER.debug("Registered to platform");
-        ITEMS.register(platform);
-    }
 }

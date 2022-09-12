@@ -35,7 +35,6 @@ import java.util.function.Supplier;
  */
 public class NWBlocks {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedBlockRegistry BLOCKS = PollinatedRegistry.createBlock(NWItems.ITEMS);
     private static final Woodset FIR = new Woodset(MaterialColor.DEEPSLATE, MaterialColor.COLOR_BROWN);
 
@@ -63,10 +62,5 @@ public class NWBlocks {
 
     private static Function<Block, Item> followItem(Item insertAfter, Item.Properties properties) {
         return object -> new TabInsertBlockItem(object, insertAfter, properties);
-    }
-
-    public static void load(Platform platform) {
-        LOGGER.debug("Registered to platform");
-        BLOCKS.register(platform);
     }
 }

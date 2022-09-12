@@ -37,15 +37,9 @@ import java.util.function.Supplier;
 
 public class NWFeatures {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedRegistry<Feature<?>> FEATURES = PollinatedRegistry.create(Registry.FEATURE, NewWorld.MOD_ID);
 
     public static final Supplier<Feature<BlockStateConfiguration>> FALLEN_LOG = FEATURES.register("fallen_log", () -> new FallenLogFeature(BlockStateConfiguration.CODEC));
-
-    public static void load(Platform platform) {
-        LOGGER.debug("Registered to platform");
-        FEATURES.register(platform);
-    }
 
     public static class Configured {
 
@@ -98,12 +92,6 @@ public class NWFeatures {
         @ExpectPlatform
         public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature, String name) {
             return Platform.error();
-        }
-
-        public static void load(Platform platform) {
-            LOGGER.debug("Registered to platform");
-            CONFIGURED_FEATURES.register(platform);
-            PLACEMENTS.register(platform);
         }
     }
 }
