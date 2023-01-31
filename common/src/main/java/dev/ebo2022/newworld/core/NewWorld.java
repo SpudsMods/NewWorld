@@ -40,6 +40,7 @@ public class NewWorld {
 
     public static void clientPostInit(Platform.ModSetupContext ctx) {
         RenderTypeRegistry.register(NWBlocks.FIR_SAPLING.get(), RenderType.cutout());
+        RenderTypeRegistry.register(NWBlocks.POTTED_FIR_SAPLING.get(), RenderType.cutout());
     }
 
     public static void commonInit() {
