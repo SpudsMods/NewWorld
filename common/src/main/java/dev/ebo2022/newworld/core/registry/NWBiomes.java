@@ -26,9 +26,4 @@ public class NWBiomes {
         BIOMES.register(name, biomeSupplier);
         return ResourceKey.create(Registry.BIOME_REGISTRY, id);
     }
-
-    public static void load(Platform platform) {
-        LOGGER.debug("Registered to platform");
-        BIOMES.register(platform);
-    }
 }

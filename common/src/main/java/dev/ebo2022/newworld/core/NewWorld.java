@@ -3,6 +3,7 @@ package dev.ebo2022.newworld.core;
 
 import dev.ebo2022.newworld.core.other.NWClientEvents;
 import dev.ebo2022.newworld.core.registry.*;
+import gg.moonflower.carpenter.core.registry.CarpenterChests;
 import gg.moonflower.pollen.api.config.ConfigManager;
 import gg.moonflower.pollen.api.config.PollinatedConfigType;
 import gg.moonflower.pollen.api.event.events.client.render.FogEvents;
@@ -17,6 +18,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Objects;
+import java.util.function.Supplier;
+
 /**
  * @author ebo2022
  * Created: 8/17/22
@@ -28,33 +32,39 @@ public class NewWorld {
     public static final NewWorldConfig.Server SERVER_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.SERVER, NewWorldConfig.Server::new);
     public static final NewWorldConfig.Client CLIENT_CONFIG = ConfigManager.register(MOD_ID, PollinatedConfigType.CLIENT, NewWorldConfig.Client::new);
     public static final Platform PLATFORM = Platform.builder(MOD_ID)
-            .clientInit(() -> NewWorld::clientInit)
-            .clientPostInit(() -> NewWorld::clientPostInit)
-            .commonInit(NewWorld::commonInit)
-            .commonPostInit(NewWorld::commonPostInit)
+            .clientInit(() -> NewWorld::onClient)
+            .clientPostInit(() -> NewWorld::onClientPost)
+            .commonInit(NewWorld::onCommon)
+            .commonPostInit(NewWorld::onCommonPost)
             .build();
 
-    public static void clientInit() {
+    public static void onClient() {
         FogEvents.FOG_DENSITY.register(NWClientEvents::mistyMeadow);
     }
 
-    public static void clientPostInit(Platform.ModSetupContext ctx) {
+    public static void onClientPost(Platform.ModSetupContext ctx) {
         RenderTypeRegistry.register(NWBlocks.FIR_SAPLING.get(), RenderType.cutout());
         RenderTypeRegistry.register(NWBlocks.POTTED_FIR_SAPLING.get(), RenderType.cutout());
     }
 
-    public static void commonInit() {
-        NWBlocks.load(PLATFORM);
-        NWBoatTypes.load(PLATFORM);
-        NWItems.load(PLATFORM);
-        NWFeatures.load(PLATFORM);
-        NWFeatures.Configured.load(PLATFORM);
-        NWBiomes.load(PLATFORM);
-        NWStructures.load(PLATFORM);
+    public static void onCommon() {
+        NWBlocks.BLOCKS.register(PLATFORM);
+        try {
+            Class.forName("gg.moonflower.carpenter.core.Carpenter", false, NewWorld.class.getClassLoader());
+            Objects.requireNonNull(NWChests.CHESTS).register();
+        } catch (ClassNotFoundException | NullPointerException ignored) {
+        }
+        NWBoatTypes.BOAT_TYPES.register(PLATFORM);
+        NWItems.ITEMS.register(PLATFORM);
+        NWFeatures.FEATURES.register(PLATFORM);
+        NWFeatures.Configured.CONFIGURED_FEATURES.register(PLATFORM);
+        NWFeatures.Configured.PLACEMENTS.register(PLATFORM);
+        NWBiomes.BIOMES.register(PLATFORM);
+        NWStructures.STRUCTURES.register(PLATFORM);
         ModifyTradesEvents.WANDERER.register(event -> event.getGeneric().add(NWBlocks.FIR_SAPLING, 5 , 1, 8, 1, 0.15F, true));
     }
 
-    public static void commonPostInit(Platform.ModSetupContext ctx) {
+    public static void onCommonPost(Platform.ModSetupContext ctx) {
         ctx.enqueueWork(() -> {
             NWStructures.postLoad();
             CompostablesRegistry.register(NWBlocks.FIR_SAPLING.get(), 0.3F);
@@ -79,17 +89,12 @@ public class NewWorld {
         return new ResourceLocation(MOD_ID, path);
     }
 
-    public static <T> T makeCompatObject(T object, T orElse, String... modIds) {
-        if (modIds == null) return object;
-        for (String id: modIds) {
-            if (Platform.isModLoaded(id)) {
-                return object;
-            }
+    public static <T> T carpenterOnly(Supplier<T> supplier) {
+        try {
+            Class.forName("gg.moonflower.carpenter.core.Carpenter", false, NewWorld.class.getClassLoader());
+            return supplier.get();
+        } catch (ClassNotFoundException e) {
+            return null;
         }
-        return orElse;
-    }
-
-    public static <T> T makeCompatObject(T object, String... modIds) {
-        return makeCompatObject(object, null, modIds);
     }
 }

@@ -20,11 +20,6 @@ public class NWStructures {
 
     public static final Supplier<StructureFeature<?>> BURIED_BUNKER = STRUCTURES.register("buried_bunker", BuriedBunkerFeature::new);
 
-    public static void load(Platform platform) {
-        LOGGER.debug("Registered to platform");
-        STRUCTURES.register(platform);
-    }
-
     public static void postLoad() {
         StructureFeatureAccessor.getSTEP().put(BURIED_BUNKER.get(), GenerationStep.Decoration.SURFACE_STRUCTURES);
     }

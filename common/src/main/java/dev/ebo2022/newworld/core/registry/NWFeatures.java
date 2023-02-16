@@ -42,11 +42,6 @@ public class NWFeatures {
 
     public static final Supplier<Feature<BlockStateConfiguration>> FALLEN_LOG = FEATURES.register("fallen_log", () -> new FallenLogFeature(BlockStateConfiguration.CODEC));
 
-    public static void load(Platform platform) {
-        LOGGER.debug("Registered to platform");
-        FEATURES.register(platform);
-    }
-
     public static class Configured {
 
         private static final Logger LOGGER = LogManager.getLogger();
@@ -94,15 +89,10 @@ public class NWFeatures {
             return (new TreeConfiguration.TreeConfigurationBuilder(BlockStateProvider.simple(NWBlocks.FIR_LOG.get()), new StraightTrunkPlacer(6, 1, 2), BlockStateProvider.simple(NWBlocks.FIR_LEAVES.get()), new SpruceFoliagePlacer(UniformInt.of(1, 3), UniformInt.of(0, 1), UniformInt.of(3, 4)), new TwoLayersFeatureSize(2, 0, 2))).ignoreVines();
         }
 
+        // TODO: use registry values when Pollen updates. Classes need to stay the same for features to work
         @ExpectPlatform
         public static Holder<PlacedFeature> getHolder(Supplier<PlacedFeature> feature, String name) {
             return Platform.error();
-        }
-
-        public static void load(Platform platform) {
-            LOGGER.debug("Registered to platform");
-            CONFIGURED_FEATURES.register(platform);
-            PLACEMENTS.register(platform);
         }
     }
 }

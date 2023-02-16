@@ -52,6 +52,7 @@ dependencies {
     forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
     modApi("gg.moonflower:pollen-forge:${rootProject.pollen_version}")
     modImplementation("com.github.glitchfiend:TerraBlender-forge:${rootProject.minecraft_version}-${rootProject.terrablender_version}")
+    modApi("curse.maven:carpenter-549446:${rootProject.carpenter_forge_version}")
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
