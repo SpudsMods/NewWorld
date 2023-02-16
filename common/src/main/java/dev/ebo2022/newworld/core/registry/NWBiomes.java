@@ -16,7 +16,6 @@ import java.util.function.Supplier;
 
 public class NWBiomes {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedRegistry<Biome> BIOMES = PollinatedRegistry.create(BuiltinRegistries.BIOME, NewWorld.MOD_ID);
 
     public static final ResourceKey<Biome> WOODED_MEADOW = createBiome("wooded_meadow", NWGeneration::woodedMeadow);

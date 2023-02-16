@@ -37,7 +37,6 @@ import java.util.function.Supplier;
 
 public class NWFeatures {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedRegistry<Feature<?>> FEATURES = PollinatedRegistry.create(Registry.FEATURE, NewWorld.MOD_ID);
 
     public static final Supplier<Feature<BlockStateConfiguration>> FALLEN_LOG = FEATURES.register("fallen_log", () -> new FallenLogFeature(BlockStateConfiguration.CODEC));
@@ -78,6 +77,7 @@ public class NWFeatures {
         public static final ResourceKey<PlacedFeature> TREES_FIR_MEADOW_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, NewWorld.location("trees_fir_meadow"));
         public static final Supplier<PlacedFeature> FALLEN_FIR_LOG_PLACEMENT = PLACEMENTS.register("fallen_fir_log", () -> new PlacedFeature(Holder.direct(FALLEN_FIR_LOG.get()), List.of(RarityFilter.onAverageOnceEvery(7), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
         public static final Supplier<PlacedFeature> PATCH_BERRY_WOODED_MEADOW_PLACEMENT = PLACEMENTS.register("patch_berry_wooded_meadow", () -> new PlacedFeature(Holder.direct(PATCH_BERRY_BUSH_WOODED_MEADOW.get()), List.of(RarityFilter.onAverageOnceEvery(12), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+        public static final ResourceKey<PlacedFeature> PATCH_BERRY_KEY = ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, NewWorld.location("patch_berry_wooded_meadow"));
         public static final Supplier<PlacedFeature> MOSS_CARPET_WOODED_MEADOW_PLACEMENT = PLACEMENTS.register("moss_carpet_wooded_meadow", () -> new PlacedFeature(Holder.direct(MOSS_CARPET_BUSH_WOODED_MEADOW.get()), List.of(CountPlacement.of(2), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
         public static final Supplier<PlacedFeature> GLOW_LICHEN_WOODED_MEADOW_PLACEMENT = PLACEMENTS.register("glow_lichen_wooded_meadow", () -> new PlacedFeature(Holder.direct(GLOW_LICHEN_WOODED_MEADOW.get()), List.of(CountPlacement.of(UniformInt.of(104, 157)), PlacementUtils.FULL_RANGE, RarityFilter.onAverageOnceEvery(2), SurfaceRelativeThresholdFilter.of(Heightmap.Types.OCEAN_FLOOR_WG, 30, 300), BiomeFilter.biome())));
 

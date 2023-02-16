@@ -24,8 +24,12 @@ public class NewWorldFabric implements ModInitializer, TerraBlenderApi {
         NewWorld.PLATFORM.setup();
         final NewWorldConfig.Server config = NewWorld.SERVER_CONFIG;
 
-        if (config.firsInMeadow.get())
+        if (config.firsInMeadow.get()) {
             BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MEADOW), GenerationStep.Decoration.VEGETAL_DECORATION, NWFeatures.Configured.TREES_FIR_MEADOW_KEY);
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(Biomes.MEADOW), GenerationStep.Decoration.VEGETAL_DECORATION, NWFeatures.Configured.PATCH_BERRY_KEY);
+        }
+
+
 
         if (config.firsInTaiga.get())
             BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_TAIGA), GenerationStep.Decoration.VEGETAL_DECORATION, NWFeatures.Configured.TREES_FIR_SCARCE_KEY);

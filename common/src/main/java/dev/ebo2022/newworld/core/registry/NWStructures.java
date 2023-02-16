@@ -15,7 +15,6 @@ import java.util.function.Supplier;
 
 public class NWStructures {
 
-    private static final Logger LOGGER = LogManager.getLogger();
     public static final PollinatedRegistry<StructureFeature<?>> STRUCTURES = PollinatedRegistry.create(Registry.STRUCTURE_FEATURE, NewWorld.MOD_ID);
 
     public static final Supplier<StructureFeature<?>> BURIED_BUNKER = STRUCTURES.register("buried_bunker", BuriedBunkerFeature::new);
