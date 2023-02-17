@@ -20,9 +20,5 @@ public class NWChests {
 
     public static final Supplier<Block> FIR_CHEST = NewWorld.carpenterOnly(() -> Objects.requireNonNull(CHESTS).registerChest("fir_chest"));
     public static final Supplier<Block> TRAPPED_FIR_CHEST = NewWorld.carpenterOnly(() -> Objects.requireNonNull(CHESTS).registerTrappedChest("fir_chest"));
-    public static final Supplier<Block> FIR_BOOKSHELF = NewWorld.carpenterOnly(() -> NWBlocks.BLOCKS.registerWithItem("fir_bookshelf", () -> new CarpenterBookshelfBlock(BlockBehaviour.Properties.copy(Blocks.BOOKSHELF)), (block) -> new TabInsertBlockItem(Items.BOOKSHELF, block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS))));
-
-    private static Supplier<Block> registerBookshelf(String wood) {
-        return NWBlocks.BLOCKS.registerWithItem(wood + "_bookshelf", () -> new CarpenterBookshelfBlock(BlockBehaviour.Properties.copy(Blocks.BOOKSHELF)), (block) -> new TabInsertBlockItem(Items.BOOKSHELF, block, new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-    }
+    public static final Supplier<Block> FIR_BOOKSHELF = NewWorld.carpenterOnly(() -> NWBlocks.BLOCKS.registerWithItem("fir_bookshelf", () -> new CarpenterBookshelfBlock(BlockBehaviour.Properties.copy(Blocks.BOOKSHELF)), (block) -> new TabInsertBlockItem(block, Items.BOOKSHELF,  new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS))));
 }
